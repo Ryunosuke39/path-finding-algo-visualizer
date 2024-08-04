@@ -1,6 +1,12 @@
+"use client"
+
+import { useState } from "react"
 import "./navbar.css"
+import { useSwitchs } from "./SwitchCtx"
 
 export default function Navbar(){
+    const { placingStart, setPlacingStart } = useSwitchs();
+
     return(
         <div className="navbar-container">
             <div className="title-container">
@@ -18,9 +24,12 @@ export default function Navbar(){
                 </select>
             </div>
 
-            <div>Place Start</div>
-            <div>Place Goal</div>
-            <div>Draw Wall</div>
+            <button onClick={()=>setPlacingStart(!placingStart)}>
+                {placingStart ? "Done":"Place Start"}
+            </button>
+            <button>Place Goal</button>
+            <button>Draw Wall</button>
+            <button>Start Path Finding</button>
 
         </div>
     )
