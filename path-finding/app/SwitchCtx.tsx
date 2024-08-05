@@ -5,17 +5,44 @@ interface SwitchsProps {
     children: React.ReactNode;
 }
 
+// board representaton for serach algo
+/* start = "S" goal = "G", wall = "#", path(or space) =  " " 
+*/
+
 // for default context value, add useState value 
 interface Switchs {
     // placing state 
     placingStart: boolean;
     setPlacingStart: React.Dispatch<React.SetStateAction<boolean>>;
+    // placing state 
+    placingEnd: boolean;
+    setPlacingEnd: React.Dispatch<React.SetStateAction<boolean>>;
+    // placing walls
+    placingWall: boolean;
+    setPlacingWall: React.Dispatch<React.SetStateAction<boolean>>;
+    // allow drawing wall only when user holding mouse down
+    isMouseDown: boolean; 
+    setIsMouseDown: React.Dispatch<React.SetStateAction<boolean>>;
+    // for earsing 
+    erasingWall: boolean;
+    setErasingWall: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
 
+// board states 
 interface BoardInfo {
-    //start state 
+    // start state 
     start: number[];
     setStart: React.Dispatch<React.SetStateAction<number[]>>;
+    // end state 
+    end: number[];
+    setEnd: React.Dispatch<React.SetStateAction<number[]>>;
+    // walls state 
+    walls: number[][];
+    setWalls: React.Dispatch<React.SetStateAction<number[][]>>;
+    // completed board info for search algorithm 
+    board: number[][];
+    setBoard: React.Dispatch<React.SetStateAction<number[][]>>;
 }
 
 // use switch contexts
@@ -43,14 +70,45 @@ const BoardInfoContext = createContext<BoardInfo | null>(null)
 export function SwitchCtxProvider({ children }:SwitchsProps ) {
 
     // navbar functions
-    const [placingStart, setPlacingStart] = useState<boolean>(false)
+    const [placingStart, setPlacingStart] = useState<boolean>(false);
+    const [placingEnd, setPlacingEnd] = useState<boolean>(false);
+    // navbar functions - drawing wall states 
+    const [placingWall, setPlacingWall] = useState<boolean>(false);
+    const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+    // navbar functions - erasing wall states
+    const [erasingWall, setErasingWall] = useState<boolean>(false);
 
     // board functions
-    const [start, setStart] = useState([0, 0]);
+    const [start, setStart] = useState<number[]>([]);
+    const [end, setEnd] = useState<number[]>([]);
+    const [walls, setWalls] = useState<number[][]>([]);
+    const [board, setBoard] = useState<number[][]>([]);
 
     return (
-        <SwitchsContext.Provider value={{ placingStart, setPlacingStart }}>
-            <BoardInfoContext.Provider value={{ start, setStart }}>
+        <SwitchsContext.Provider value={{ 
+            placingStart, 
+            setPlacingStart,
+            placingEnd,
+            setPlacingEnd,
+            // wall draw operations
+            placingWall, 
+            setPlacingWall,
+            isMouseDown,
+            setIsMouseDown,
+            // wall erase operations
+            erasingWall,
+            setErasingWall,
+        }}>
+            <BoardInfoContext.Provider value={{ 
+                start, 
+                setStart,
+                end,
+                setEnd,
+                walls,
+                setWalls,
+                board,
+                setBoard,
+            }}>
                 <div>{ children }</div>
             </BoardInfoContext.Provider>
         </SwitchsContext.Provider>

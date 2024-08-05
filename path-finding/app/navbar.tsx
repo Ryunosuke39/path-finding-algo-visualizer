@@ -1,11 +1,17 @@
 "use client"
 
-import { useState } from "react"
 import "./navbar.css"
 import { useSwitchs } from "./SwitchCtx"
 
 export default function Navbar(){
-    const { placingStart, setPlacingStart } = useSwitchs();
+    const { placingStart, 
+            setPlacingStart, 
+            placingEnd, 
+            setPlacingEnd,
+            placingWall, 
+            setPlacingWall, 
+            erasingWall,
+            setErasingWall, } = useSwitchs();
 
     return(
         <div className="navbar-container">
@@ -27,9 +33,17 @@ export default function Navbar(){
             <button onClick={()=>setPlacingStart(!placingStart)}>
                 {placingStart ? "Done":"Place Start"}
             </button>
-            <button>Place Goal</button>
-            <button>Draw Wall</button>
+            <button onClick={()=> setPlacingEnd(!placingEnd)}>
+                {placingEnd ? "Done": "Place Goal"}
+            </button>
+            <button onClick={()=> setPlacingWall(!placingWall)}>
+                {placingWall ? "Done":"Placing Walls"}
+            </button>
+            <button onClick={()=> setErasingWall(!erasingWall)}>
+                {erasingWall ? "Done" : "Erasing Walls"}
+            </button>
             <button>Start Path Finding</button>
+            <button onClick={()=> location.reload()}>Reset Board</button>
 
         </div>
     )
