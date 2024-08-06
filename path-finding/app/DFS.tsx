@@ -54,7 +54,7 @@ class StackFrontier {
 class Maze {
     // get map 
 
-    // get neibors 
+    // get neighbors
     neighbors(state: number[]) {
         const row = state[0]
         const col = state[1]

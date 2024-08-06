@@ -53,7 +53,7 @@
 }
 
 .explored-cell {
-    background: yellow;
+    background: rgb(255, 0, 242);
 }
 
 .path-cell {
