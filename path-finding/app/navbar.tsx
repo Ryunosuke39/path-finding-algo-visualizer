@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css"
 import "./navbar.css"
 import { useBoardInfo, useSwitchs } from "./SwitchCtx"
 import Popup from "./Popup";
+import { ScanBoard } from "./ScanBoard";
 
 export default function Navbar(){
     const { placingStart, 
@@ -22,14 +23,13 @@ export default function Navbar(){
             showInstraction,
             setShowInstraction, } = useSwitchs();
     
-    const { start, end } = useBoardInfo();
+    const { start, end, walls } = useBoardInfo();
 
 
     const handleAlgoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setCurrentAlgo(event?.target.value)
     }
 
-    const notify = () => toast("Wow so easy!")
 
     const handleSearch = () => {
         console.log(`start: ${start}, end: ${end}`)
@@ -60,6 +60,9 @@ export default function Navbar(){
         else {
             // if both start and end is placed on board, start searching
             setStartSearch(true)
+            // ExcuteSearch(currentAlgo)
+            const scannedBoard = ScanBoard({start, end, walls})
+            console.log("scan-res:", scannedBoard)
         }
     }
 
