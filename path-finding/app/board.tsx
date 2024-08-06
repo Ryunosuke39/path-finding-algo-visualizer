@@ -15,14 +15,16 @@ export default function Board() {
             end, 
             setEnd, 
             walls,
-            setWalls,} = useBoardInfo()
+            setWalls,
+        board} = useBoardInfo()
 
     const { placingStart, 
             placingEnd, 
             placingWall,
             isMouseDown,
             setIsMouseDown, 
-            erasingWall, } = useSwitchs();
+            erasingWall, 
+            currentAlgo,} = useSwitchs();
 
 
     // width and height of board 
@@ -164,6 +166,8 @@ export default function Board() {
                                 // just testing 
                                 console.log(`checking walls: ${walls}`)
                                 console.log(`first cell in walls: ${walls[0]}`)
+                                console.log(`current algo: ${currentAlgo}`)
+                                console.log(`scanned map: ${board}`)
                             }}
                             onMouseDown={()=> {
                                 setIsMouseDown(true);

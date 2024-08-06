@@ -1,7 +1,10 @@
 "use client"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import "./navbar.css"
-import { useSwitchs } from "./SwitchCtx"
+import { useBoardInfo, useSwitchs } from "./SwitchCtx"
+import Popup from "./Popup";
 
 export default function Navbar(){
     const { placingStart, 
@@ -11,24 +14,62 @@ export default function Navbar(){
             placingWall, 
             setPlacingWall, 
             erasingWall,
-            setErasingWall, } = useSwitchs();
+            setErasingWall, 
+            currentAlgo,
+            setCurrentAlgo, 
+            startSearch, 
+            setStartSearch,
+            showInstraction,
+            setShowInstraction, } = useSwitchs();
+    
+    const { start, end } = useBoardInfo();
+
+
+    const handleAlgoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setCurrentAlgo(event?.target.value)
+    }
+
+    const notify = () => toast("Wow so easy!")
+
+    const handleSearch = () => {
+        console.log(`start: ${start}, end: ${end}`)
+        if(start[0] == undefined || null ) {
+            toast.error('Make sure to place A Start Point', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
+        }
+        if(end[0] == undefined || null) {
+            toast.error('Make sure to place A Goal Point', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                });
+        }
+        else {
+            // if both start and end is placed on board, start searching
+            setStartSearch(true)
+        }
+    }
 
     return(
         <div className="navbar-container">
             <div className="title-container">
                 <div>Pathfinding Visualizer</div>
-                <div>?</div>
+                <div onClick={()=>setShowInstraction(true)}>?</div>
             </div>
-
-            <div className="test">
-                <label htmlFor="algorithm">Algorithm AI</label>
-                <select name="algorithm" id="algorithm">
-                    <option value="DFS">Depth First Search</option>
-                    <option value="BFS">Breath First Search</option>
-                    <option value="A*">A*</option>
-                    <option value="Minimax">Minimax</option>
-                </select>
-            </div>
+            <Popup triggerPop={showInstraction}></Popup>
 
             <button onClick={()=>setPlacingStart(!placingStart)}>
                 {placingStart ? "Done":"Place Start"}
@@ -42,8 +83,23 @@ export default function Navbar(){
             <button onClick={()=> setErasingWall(!erasingWall)}>
                 {erasingWall ? "Done" : "Erasing Walls"}
             </button>
-            <button>Start Path Finding</button>
-            <button onClick={()=> location.reload()}>Reset Board</button>
+
+            <div className="test">
+                <label htmlFor="algorithm">Algorithm AI</label>
+                <select name="algorithm" id="algorithm" value={currentAlgo} onChange={handleAlgoChange}>
+                    <option value="DFS">Depth First Search</option>
+                    <option value="BFS">Breath First Search</option>
+                    <option value="A*">A*</option>
+                    <option value="Minimax">Minimax</option>
+                </select>
+            </div>
+            <ToastContainer theme="colored"/>
+            <button onClick={handleSearch}>
+                Start Path Finding
+            </button>
+            <button onClick={()=> location.reload()}>
+                Reset Board
+            </button>
 
         </div>
     )

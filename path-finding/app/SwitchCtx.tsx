@@ -27,6 +27,15 @@ interface Switchs {
     erasingWall: boolean;
     setErasingWall: React.Dispatch<React.SetStateAction<boolean>>;
 
+    // algo choise
+    currentAlgo: string;
+    setCurrentAlgo: React.Dispatch<React.SetStateAction<string>>;
+    startSearch: boolean;
+    setStartSearch: React.Dispatch<React.SetStateAction<boolean>>;
+
+    // ? Popup
+    showInstraction: boolean;
+    setShowInstraction: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // board states 
@@ -41,8 +50,8 @@ interface BoardInfo {
     walls: number[][];
     setWalls: React.Dispatch<React.SetStateAction<number[][]>>;
     // completed board info for search algorithm 
-    board: number[][];
-    setBoard: React.Dispatch<React.SetStateAction<number[][]>>;
+    board: string[][];
+    setBoard: React.Dispatch<React.SetStateAction<string[][]>>;
 }
 
 // use switch contexts
@@ -77,12 +86,18 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
     const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
     // navbar functions - erasing wall states
     const [erasingWall, setErasingWall] = useState<boolean>(false);
+    // algorithm choise 
+    const [currentAlgo, setCurrentAlgo] = useState<string>("");
+    // start search
+    const [startSearch, setStartSearch] = useState<boolean>(false);
+    // ? Popup
+    const [showInstraction, setShowInstraction] = useState<boolean>(false);
 
     // board functions
     const [start, setStart] = useState<number[]>([]);
     const [end, setEnd] = useState<number[]>([]);
     const [walls, setWalls] = useState<number[][]>([]);
-    const [board, setBoard] = useState<number[][]>([]);
+    const [board, setBoard] = useState<string[][]>([]); // "S" for start and so on
 
     return (
         <SwitchsContext.Provider value={{ 
@@ -98,6 +113,15 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
             // wall erase operations
             erasingWall,
             setErasingWall,
+            // algo 
+            currentAlgo, 
+            setCurrentAlgo,
+            // start sreach button
+            startSearch, 
+            setStartSearch, 
+            // ? popup
+            showInstraction,
+            setShowInstraction,
         }}>
             <BoardInfoContext.Provider value={{ 
                 start, 
