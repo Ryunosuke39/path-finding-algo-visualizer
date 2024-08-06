@@ -30,8 +30,7 @@ interface Switchs {
     // algo choise
     currentAlgo: string;
     setCurrentAlgo: React.Dispatch<React.SetStateAction<string>>;
-    startSearch: boolean;
-    setStartSearch: React.Dispatch<React.SetStateAction<boolean>>;
+    // do I need this? It not gonna toggle anything
 
     // ? Popup
     showInstraction: boolean;
@@ -87,9 +86,9 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
     // navbar functions - erasing wall states
     const [erasingWall, setErasingWall] = useState<boolean>(false);
     // algorithm choise 
-    const [currentAlgo, setCurrentAlgo] = useState<string>("");
+    const [currentAlgo, setCurrentAlgo] = useState<string>("DFS");
     // start search
-    const [startSearch, setStartSearch] = useState<boolean>(false);
+
     // ? Popup
     const [showInstraction, setShowInstraction] = useState<boolean>(false);
 
@@ -116,9 +115,6 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
             // algo 
             currentAlgo, 
             setCurrentAlgo,
-            // start sreach button
-            startSearch, 
-            setStartSearch, 
             // ? popup
             showInstraction,
             setShowInstraction,

@@ -3,10 +3,13 @@ import "./board.css"
 import { useBoardInfo } from "./SwitchCtx";
 import { useSwitchs } from "./SwitchCtx"
 
-// get cell for search algorithm to paint them 
-export const getCells = () => {
-
+// paint explored cells - used in DFS, and others
+export const paintExplored = (pos: Array<number>) => {
+    let cell = document.getElementById(`${pos[0]}-${pos[1]}`)
+    cell?.classList.add("explored-cell");
 }
+
+
 
 export default function Board() {
 
@@ -16,7 +19,7 @@ export default function Board() {
             setEnd, 
             walls,
             setWalls,
-        board} = useBoardInfo()
+            board, } = useBoardInfo()
 
     const { placingStart, 
             placingEnd, 
@@ -129,7 +132,6 @@ export default function Board() {
         }
         console.log(`current walls: ${walls}`)
     }
-
 
     // reflect selected cell
     useEffect(()=>{

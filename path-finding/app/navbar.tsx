@@ -6,6 +6,9 @@ import "./navbar.css"
 import { useBoardInfo, useSwitchs } from "./SwitchCtx"
 import Popup from "./Popup";
 import { ScanBoard } from "./ScanBoard";
+import { DFS } from "./DFS";
+import { useEffect } from "react";
+import { Algo } from "./AlgoBand";
 
 export default function Navbar(){
     const { placingStart, 
@@ -18,12 +21,14 @@ export default function Navbar(){
             setErasingWall, 
             currentAlgo,
             setCurrentAlgo, 
-            startSearch, 
-            setStartSearch,
             showInstraction,
             setShowInstraction, } = useSwitchs();
     
-    const { start, end, walls } = useBoardInfo();
+    const { start, 
+            end, 
+            walls,
+            board,
+            setBoard, } = useBoardInfo();
 
 
     const handleAlgoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -59,12 +64,19 @@ export default function Navbar(){
         }
         else {
             // if both start and end is placed on board, start searching
-            setStartSearch(true)
             // ExcuteSearch(currentAlgo)
             const scannedBoard = ScanBoard({start, end, walls})
             console.log("scan-res:", scannedBoard)
+            setBoard(scannedBoard)
+            // DFS({start, end, walls, scannedBoard})
         }
     }
+
+    // pass board and show ai 
+    useEffect(()=> {
+        // pass it to 
+        Algo({currentAlgo, start, end, walls, board})
+    }, [board])
 
     return(
         <div className="navbar-container">
@@ -96,7 +108,8 @@ export default function Navbar(){
                     <option value="Minimax">Minimax</option>
                 </select>
             </div>
-            <ToastContainer theme="colored"/>
+            {/* for popup messsage - read react toastify doc */}
+            <ToastContainer theme="colored"/> 
             <button onClick={handleSearch}>
                 Start Path Finding
             </button>
