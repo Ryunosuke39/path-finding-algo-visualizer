@@ -48,9 +48,6 @@ interface BoardInfo {
     // walls state 
     walls: number[][];
     setWalls: React.Dispatch<React.SetStateAction<number[][]>>;
-    // completed board info for search algorithm 
-    board: string[][];
-    setBoard: React.Dispatch<React.SetStateAction<string[][]>>;
 }
 
 // use switch contexts
@@ -96,7 +93,6 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
     const [start, setStart] = useState<number[]>([]);
     const [end, setEnd] = useState<number[]>([]);
     const [walls, setWalls] = useState<number[][]>([]);
-    const [board, setBoard] = useState<string[][]>([]); // "S" for start and so on
 
     return (
         <SwitchsContext.Provider value={{ 
@@ -126,8 +122,6 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
                 setEnd,
                 walls,
                 setWalls,
-                board,
-                setBoard,
             }}>
                 <div>{ children }</div>
             </BoardInfoContext.Provider>

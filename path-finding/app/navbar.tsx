@@ -9,6 +9,7 @@ import { ScanBoard } from "./ScanBoard";
 import { DFS } from "./DFS";
 import { useEffect } from "react";
 import { Algo } from "./AlgoBand";
+import { clearPath } from "./board";
 
 export default function Navbar(){
     const { placingStart, 
@@ -26,9 +27,7 @@ export default function Navbar(){
     
     const { start, 
             end, 
-            walls,
-            board,
-            setBoard, } = useBoardInfo();
+            walls, } = useBoardInfo();
 
 
     const handleAlgoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -65,18 +64,21 @@ export default function Navbar(){
         else {
             // if both start and end is placed on board, start searching
             // ExcuteSearch(currentAlgo)
+            console.log(`end:${end}, start:${start}`)
             const scannedBoard = ScanBoard({start, end, walls})
             console.log("scan-res:", scannedBoard)
-            setBoard(scannedBoard)
-            // DFS({start, end, walls, scannedBoard})
+            Algo({currentAlgo, start, end, walls, scannedBoard})
         }
     }
 
-    // pass board and show ai 
-    useEffect(()=> {
-        // pass it to 
-        Algo({currentAlgo, start, end, walls, board})
-    }, [board])
+    // remove all explored, path tag from thml elements
+    const handleClear = () => {
+        for(let i=0; i<25; i++){
+            for(let j=0; j<50; j++){
+                clearPath([i, j])
+            }
+        }
+    }
 
     return(
         <div className="navbar-container">
@@ -112,6 +114,9 @@ export default function Navbar(){
             <ToastContainer theme="colored"/> 
             <button onClick={handleSearch}>
                 Start Path Finding
+            </button>
+            <button onClick={handleClear}>
+                Clear Path
             </button>
             <button onClick={()=> location.reload()}>
                 Reset Board

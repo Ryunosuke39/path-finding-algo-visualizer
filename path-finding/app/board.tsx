@@ -9,6 +9,19 @@ export const paintExplored = (pos: Array<number>) => {
     cell?.classList.add("explored-cell");
 }
 
+// paint explored cells - used in DFS, and others
+export const paintPath = (pos: Array<number>) => {
+    let cell = document.getElementById(`${pos[0]}-${pos[1]}`)
+    cell?.classList.add("path-cell");
+}
+
+// clear path and explored 
+export const clearPath = (pos: Array<number>) => {
+    let cell = document.getElementById(`${pos[0]}-${pos[1]}`)
+    cell?.classList.remove("explored-cell");
+    cell?.classList.remove("path-cell");
+
+}
 
 
 export default function Board() {
@@ -18,8 +31,7 @@ export default function Board() {
             end, 
             setEnd, 
             walls,
-            setWalls,
-            board, } = useBoardInfo()
+            setWalls, } = useBoardInfo()
 
     const { placingStart, 
             placingEnd, 
@@ -169,7 +181,6 @@ export default function Board() {
                                 console.log(`checking walls: ${walls}`)
                                 console.log(`first cell in walls: ${walls[0]}`)
                                 console.log(`current algo: ${currentAlgo}`)
-                                console.log(`scanned map: ${board}`)
                             }}
                             onMouseDown={()=> {
                                 setIsMouseDown(true);

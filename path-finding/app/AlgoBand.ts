@@ -6,13 +6,13 @@ interface AlgoProps {
     start: number[];
     end: number[]
     walls: number[][];
-    board: string[][];
+    scannedBoard: string[][];
 }
 
-export const Algo =({currentAlgo, start, end, walls, board}:AlgoProps)=> {
+export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> {
 
     if(currentAlgo === "DFS") {
-        DFS({start, end, walls, board})
+        DFS({start, end, walls, scannedBoard})
     }
     else if(currentAlgo === "BFS") {
         //BFS({start, end, walls, board})
