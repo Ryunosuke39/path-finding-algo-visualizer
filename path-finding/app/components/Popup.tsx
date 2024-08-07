@@ -1,4 +1,4 @@
-import './Popup.css'
+import './styles/Popup.css'
 import { useSwitchs } from './SwitchCtx'
 
 export default function Popup({triggerPop}: {triggerPop: boolean}) {

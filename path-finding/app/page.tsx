@@ -1,8 +1,8 @@
 "use client"
 
-import Board from "./board";
-import Navbar from "./navbar";
-import { SwitchCtxProvider } from "./SwitchCtx"
+import Board from "./components/board";
+import Navbar from "./components/navbar";
+import { SwitchCtxProvider } from "./components/SwitchCtx"
 
 export default function Page(){
 

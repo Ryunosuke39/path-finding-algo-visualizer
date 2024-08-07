@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "./board.css"
+import "./styles/board.css"
 import { useBoardInfo } from "./SwitchCtx";
 import { useSwitchs } from "./SwitchCtx"
 

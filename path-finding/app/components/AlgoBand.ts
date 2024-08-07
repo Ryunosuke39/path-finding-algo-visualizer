@@ -1,6 +1,6 @@
-import { DBFS } from "./DBFS";
-import { StackFrontier } from "./StackFrontier";
-import { QueueFrontier } from "./QueueFrontier";
+import { DBFS } from "./algorithms/DBFS";
+import { StackFrontier } from "./algorithms/StackFrontier";
+import { QueueFrontier } from "./algorithms/QueueFrontier";
 
 interface AlgoProps {
     currentAlgo: string;

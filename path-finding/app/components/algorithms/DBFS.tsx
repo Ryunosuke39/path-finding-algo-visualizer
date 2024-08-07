@@ -1,4 +1,4 @@
-import { paintExplored, paintPath } from "./board";
+import { paintExplored, paintPath } from "../board";
 import { StackFrontier } from "./StackFrontier";
 import { QueueFrontier } from "./QueueFrontier";
 import { Node } from "./Node";

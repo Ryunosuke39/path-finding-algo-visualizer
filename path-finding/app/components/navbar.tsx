@@ -2,7 +2,7 @@
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 
-import "./navbar.css"
+import "./styles/navbar.css"
 import { useBoardInfo, useSwitchs } from "./SwitchCtx"
 import Popup from "./Popup";
 import { ScanBoard } from "./ScanBoard";
