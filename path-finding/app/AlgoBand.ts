@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import { DFS } from "./DFS";
+import { DBFS } from "./DBFS";
+import { StackFrontier } from "./StackFrontier";
+import { QueueFrontier } from "./QueueFrontier";
 
 interface AlgoProps {
     currentAlgo: string;
@@ -12,10 +13,12 @@ interface AlgoProps {
 export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> {
 
     if(currentAlgo === "DFS") {
-        DFS({start, end, walls, scannedBoard})
+        const frontier = new StackFrontier;
+        DBFS({start, end, walls, scannedBoard, frontier})
     }
     else if(currentAlgo === "BFS") {
-        //BFS({start, end, walls, board})
+        const frontier = new QueueFrontier;
+        DBFS({start, end, walls, scannedBoard, frontier})
     }
     else if( currentAlgo === "A*") {
         //AStar({start, end, walls, board})

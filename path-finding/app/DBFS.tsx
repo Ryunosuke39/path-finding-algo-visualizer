@@ -1,61 +1,17 @@
 import { paintExplored, paintPath } from "./board";
-
-
-class Node {
-    state: number[];
-    parent: Node | null;
-    action: string | null;
-
-    constructor( {state, parent, action} : Node ) {
-        this.state = state;
-        this.parent = parent;
-        this.action = action;
-    }
-}
-
-class StackFrontier {
-    frontier: Node[]
-
-    constructor() {
-        this.frontier = []
-    }
-
-    add(node:Node) {
-        this.frontier.push(node)
-    }
-
-    containsState(state:number[]) {
-        for(let i=0; i<this.frontier.length; i++) {
-            let curr = this.frontier[i].state
-            if(curr[0] == state[0] && curr[1] == state[1])
-                return true
-        } 
-        return false
-    }
-
-    empty() {
-        return this.frontier.length == 0
-    }
-
-    remove() {
-        if(this.empty()) {
-            throw new Error("frontier is empty")
-        }
-        else {
-            const node = this.frontier.pop();
-            return node
-        }
-    }
-}
+import { StackFrontier } from "./StackFrontier";
+import { QueueFrontier } from "./QueueFrontier";
+import { Node } from "./Node";
 
 interface DFSProps {
     start: number[];
     end: number[];
     walls: number[][];
     scannedBoard: string[][];
+    frontier: StackFrontier | QueueFrontier;
 }
 
-export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
+export const DFS = ({start, end, walls, scannedBoard, frontier}:DFSProps) => {
 
     // 25 row x 50 col
     class Maze {
@@ -64,8 +20,8 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
         width:number;
     
         constructor() {
-            this.height = 10 //25
-            this.width = 10 //50
+            this.height = 25 //25
+            this.width = 50 //50
         }
     
         // get map 
@@ -108,7 +64,7 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
             // Initialize frontier to just the starting position
             // const start = Node()
             let startP = new Node({state: start, parent:null, action:null});
-            let frontier = new StackFrontier();
+            // no initalize for frontier since we passing instance of it already
             frontier.add(startP)
 
             let explored = []
@@ -122,7 +78,7 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
                 }
                 // choose a node from frontier
                 let node = frontier.remove()! // non-null
-                console.log(`${node.state}-frontier: ${JSON.stringify(frontier.frontier)}`)
+                // console.log(`${node.state}-frontier: ${JSON.stringify(frontier.frontier)}`)
 
                 // if node is a goal, then we have a solution
                 if(node.state[0] == end[0] && node.state[1] == end[1]) {
@@ -151,9 +107,11 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
 
                 let test = node.state;
                 paintCount += 1;
-                setTimeout(()=>{
-                    paintExplored([test[0], test[1]])
-                }, paintCount * 10)
+                if( paintCount === 2 ) {
+                    setTimeout(()=>{
+                        paintExplored([test[0], test[1]])
+                    }, paintCount * 2)
+                }
 
                 const isInExplored = (state: number[]) => {
                     for(let i=0; i<explored.length; i++) {
@@ -169,9 +127,9 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
                 for (let [action, [r, c]] of this.neighbors(node.state)) {
                     // console.log(`neighbors-${[action, [r, c]]}`)
                     if(!frontier.containsState([r, c]) && !isInExplored([r,c])) {
-                        console.log(`node-${node.state}: neighbors-${[action, [r, c]]}`)
+                        // console.log(`node-${node.state}: neighbors-${[action, [r, c]]}`)
                         let child = new Node({state: [r, c], parent:node, action:action})
-                        console.log(`child: ${JSON.stringify(child)}`)
+                        // console.log(`child: ${JSON.stringify(child)}`)
                         frontier.add(child)
                     }
                 }
@@ -181,7 +139,4 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
 
     let test = new Maze;
     test.solve();
-
-    return 1
-    
 }

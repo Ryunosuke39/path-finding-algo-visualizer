@@ -34,7 +34,12 @@ export default function Navbar(){
 
 
     const handleSearch = () => {
-        console.log(`start: ${start}, end: ${end}`)
+        
+        setPlacingStart(false);
+        setPlacingEnd(false);
+        setPlacingWall(false);
+        setErasingWall(false);
+
         if(start[0] == undefined || null ) {
             toast.error('Make sure to place A Start Point', {
                 position: "top-center",
@@ -70,6 +75,7 @@ export default function Navbar(){
     }
 
     // remove all explored, path tag from thml elements
+    // row=25, col=50
     const handleClear = () => {
         for(let i=0; i<25; i++){
             for(let j=0; j<50; j++){
