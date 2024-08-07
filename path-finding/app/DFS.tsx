@@ -1,4 +1,3 @@
-import { stat } from "fs";
 import { paintExplored, paintPath } from "./board";
 
 
@@ -43,26 +42,11 @@ class StackFrontier {
             throw new Error("frontier is empty")
         }
         else {
-            // const lastIdx = this.frontier.length - 1
-            // const node = this.frontier[ lastIdx ]
-            // this.frontier = this.frontier.slice(lastIdx, 1)
             const node = this.frontier.pop();
             return node
         }
     }
 }
-
-/* 
-- start with a frontier that contains the initial state 
-- start with an empty explored set 
-- repeat:
-    * if the frontier is empty, then no solution.
-    * remove a node from the frontier.
-    * if node contains goal state, return the solution
-    * Add the node to the explored set.
-    * Expand node, add resulting nodes to the frontier if
-    they aren't already in the frontier or the explored set.
-*/
 
 interface DFSProps {
     start: number[];
@@ -137,8 +121,8 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
                     throw new Error("no solution")
                 }
                 // choose a node from frontier
-                let node = frontier.remove()
-                console.log(`${node?.state}-frontier: ${JSON.stringify(frontier.frontier)}`)
+                let node = frontier.remove()! // non-null
+                console.log(`${node.state}-frontier: ${JSON.stringify(frontier.frontier)}`)
 
                 // if node is a goal, then we have a solution
                 if(node.state[0] == end[0] && node.state[1] == end[1]) {
@@ -199,6 +183,5 @@ export const DFS = ({start, end, walls, scannedBoard}:DFSProps) => {
     test.solve();
 
     return 1
-   // test
     
 }

@@ -6,8 +6,6 @@ import "./navbar.css"
 import { useBoardInfo, useSwitchs } from "./SwitchCtx"
 import Popup from "./Popup";
 import { ScanBoard } from "./ScanBoard";
-import { DFS } from "./DFS";
-import { useEffect } from "react";
 import { Algo } from "./AlgoBand";
 import { clearPath } from "./board";
 
@@ -80,24 +78,58 @@ export default function Navbar(){
         }
     }
 
+    // handle set start 
+    const handlePlacingStart = () => {
+        // toggle placing start 
+        setPlacingStart(!placingStart);
+        // disable other button's feature to avoid overwriting cell with other than start 
+        setPlacingEnd(false);
+        setPlacingWall(false);
+        setErasingWall(false);
+    }
+
+    // handle set Goal 
+    const handlePlacingEnd = () => {
+        setPlacingEnd(!placingEnd);
+        setPlacingStart(false);
+        setPlacingWall(false);
+        setErasingWall(false);
+    }
+
+    // handle set wall
+    const handlePlacingWall = () => {
+        setPlacingWall(!placingWall);
+        setPlacingStart(false);
+        setPlacingEnd(false);
+        setErasingWall(false);
+    } 
+
+    // handle erasing wall
+    const handleErasingWall = () => {
+        setErasingWall(!erasingWall);
+        setPlacingStart(false);
+        setPlacingEnd(false);
+        setPlacingWall(false);
+    }
+
     return(
         <div className="navbar-container">
             <div className="title-container">
                 <div>Pathfinding Visualizer</div>
-                <div onClick={()=>setShowInstraction(true)}>?</div>
+                <div onClick={()=> setShowInstraction(true)}>?</div>
             </div>
             <Popup triggerPop={showInstraction}></Popup>
 
-            <button onClick={()=>setPlacingStart(!placingStart)}>
+            <button onClick={()=> handlePlacingStart()}>
                 {placingStart ? "Done":"Place Start"}
             </button>
-            <button onClick={()=> setPlacingEnd(!placingEnd)}>
+            <button onClick={()=> handlePlacingEnd()}>
                 {placingEnd ? "Done": "Place Goal"}
             </button>
-            <button onClick={()=> setPlacingWall(!placingWall)}>
+            <button onClick={()=> handlePlacingWall()}>
                 {placingWall ? "Done":"Placing Walls"}
             </button>
-            <button onClick={()=> setErasingWall(!erasingWall)}>
+            <button onClick={()=> handleErasingWall()}>
                 {erasingWall ? "Done" : "Erasing Walls"}
             </button>
 
