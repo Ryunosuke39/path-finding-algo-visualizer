@@ -11,7 +11,7 @@ interface DFSProps {
     frontier: StackFrontier | QueueFrontier;
 }
 
-export const DFS = ({start, end, walls, scannedBoard, frontier}:DFSProps) => {
+export const DBFS = ({start, end, walls, scannedBoard, frontier}:DFSProps) => {
 
     // 25 row x 50 col
     class Maze {
