@@ -1,8 +1,6 @@
-import { chdir } from "process";
 import { paintExplored, paintPath } from "../board";
 import { AStarNode } from "./AStarNode";
 import { ManhattanDis } from "./ManhattanDis";
-import { Node } from "./Node";
 import { PriorityQueue } from "./PriorityQueue";
 
 interface AStarProps {
@@ -15,10 +13,6 @@ interface AStarProps {
 export const AStar = ({start, end, walls, frontier}:AStarProps) => {
     let height = 25
     let width = 50
-
-    class PriorityQueue {
-
-    }
     
     // 25 row x 50 col
     class Maze {
@@ -79,7 +73,8 @@ export const AStar = ({start, end, walls, frontier}:AStarProps) => {
                 if (frontier.empty() ){
                     throw new Error("no solution")
                 }
-                // get last element 
+                // get last element
+                console.log(`his-${stepCount}: ${frontier.frontier.map((i)=> [i.state, ":" + i.totalFunctionCost + ", "])}`)
                 let node = frontier.remove()!; // non-null
 
                 // if node is a goal, then we have a solution
@@ -105,7 +100,6 @@ export const AStar = ({start, end, walls, frontier}:AStarProps) => {
                 }
 
                 // painting explored 
-                stepCount += 1;
                 let explored = node.state;
                 if( stepCount === 2 ) {
                     setTimeout(()=>{
@@ -118,16 +112,18 @@ export const AStar = ({start, end, walls, frontier}:AStarProps) => {
                     if(!frontier.containsState([r,c])) {
                         let currWeight = manhattan[r][c];
                         let test = currWeight + stepCount;
-                        console.log(`A* - ${[r,c]} : ${test}`)
+                        console.log(`A*${stepCount} - ${[r,c]} : ${test}`)
                         let child = new AStarNode({ state: [r, c], parent: node, action:action, totalFunctionCost: test})
                         frontier.add(child)
                     }
                 }
 
+                stepCount += 1;
+
                 //test 
-                if(stepCount == 2){
-                    return
-                }
+                // if(stepCount == 2){
+                //     return 
+                // }
             }
         }
     } // end of class

@@ -9,21 +9,17 @@ export class PriorityQueue {
 
     // add Astar node in ascedning order 
     add(node:AStarNode){
-        // lowest at index 0, largest at last index
-        if(!this.empty()){
-            let insertIdx = 0
-            for(let i=0; i<this.frontier.length; i++) {
-                // 0, 1, 3, 4
-                if(node.totalFunctionCost < this.frontier[i].totalFunctionCost) {
-                    insertIdx = i - 1
-                }
+        // add node based on  totalFunctionCost 
+        let insertIdx = this.frontier.length 
+        for(let i=0; i<this.frontier.length; i++) {
+            console.log(`${node.totalFunctionCost} < ${this.frontier[i].totalFunctionCost}`)
+            if(node.totalFunctionCost < this.frontier[i].totalFunctionCost){
+                insertIdx = i
+                console.log("breaking!")
+                break
             }
-
-            this.frontier.splice(insertIdx, 0, node)
         }
-        else{
-            this.frontier.push(node)
-        }
+        this.frontier.splice(insertIdx, 0, node);
     }
 
     // contain 
@@ -37,7 +33,7 @@ export class PriorityQueue {
     }
 
     empty() {
-        return this.frontier.length == 0
+        return this.frontier.length === 0
     }
 
     remove(){
@@ -45,7 +41,8 @@ export class PriorityQueue {
             throw new Error("frontier is empty")
         }
         else {
-            const node = this.frontier.shift();
+            const node = this.frontier.shift()!;
+            console.log(`removing ${node.state} from ${JSON.stringify(this.frontier)}`)
             return node
         }
     }

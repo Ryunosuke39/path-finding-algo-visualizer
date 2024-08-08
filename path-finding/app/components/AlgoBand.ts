@@ -24,7 +24,7 @@ export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> 
     }
     else if( currentAlgo === "A*") {
         //AStar({start, end, walls, board})
-        const frontier = new PriorityQueue;
+        let frontier = new PriorityQueue;
         AStar({start, end, walls, frontier})
     }
     else { // Minimax

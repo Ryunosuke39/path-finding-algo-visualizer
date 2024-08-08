@@ -210,10 +210,10 @@ export default function Board() {
                                 }
                             }}
                         >
+                             <div className="test"> {`${rowIdx}, ${colIdx}`}</div>
                             {
                                 `${ test[rowIdx][colIdx] }`
                             }
-                            <div className="test"> {`${rowIdx}, ${colIdx}`}</div>
                         </div>
                     ))
                 }</div>
