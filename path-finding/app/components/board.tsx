@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "./styles/board.css"
 import { useBoardInfo } from "./SwitchCtx";
 import { useSwitchs } from "./SwitchCtx"
+import { ManhattanDis } from "./algorithms/ManhattanDis";
 
 // paint explored cells - used in DFS, and others
 export const paintExplored = (pos: Array<number>) => {
@@ -157,6 +158,10 @@ export default function Board() {
         // paint wall
     }, [start, end])
 
+    // manhattan test 
+    let height = rows
+    let width = cols
+    const test = ManhattanDis({ end, height, width})
 
     return (
         <div className="board">
@@ -204,7 +209,10 @@ export default function Board() {
                                 }
                             }}
                         >
-                            {`${rowIdx}, ${colIdx}`}
+                            {/* {`${rowIdx}, ${colIdx}`} */}
+                            {
+                                `${ test[rowIdx][colIdx] }`
+                            }
                         </div>
                     ))
                 }</div>

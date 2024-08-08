@@ -1,4 +1,5 @@
-import { Node } from "./components/Node"
+import { Node } from "./Node"
+
 
 export class StackFrontier {
     frontier: Node[]

@@ -144,11 +144,15 @@ export default function Navbar(){
                 <select name="algorithm" id="algorithm" value={currentAlgo} onChange={handleAlgoChange}>
                     <option value="DFS">Depth First Search</option>
                     <option value="BFS">Breath First Search</option>
+                    <option value="GBF">Greedy Best-First Search</option>
                     <option value="A*">A*</option>
-                    <option value="Minimax">Minimax</option>
+                    <option value="Dijkstra">Dijkstra's Algorithm</option>
                 </select>
             </div>
             {/* for popup messsage - read react toastify doc */}
+            <button>
+                Use Preset map
+            </button>
             <ToastContainer theme="colored"/> 
             <button onClick={handleSearch}>
                 Start Path Finding

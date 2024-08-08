@@ -1,6 +1,8 @@
 import { DBFS } from "./algorithms/DBFS";
 import { StackFrontier } from "./algorithms/StackFrontier";
 import { QueueFrontier } from "./algorithms/QueueFrontier";
+import { AStar } from "./algorithms/AStar";
+import { PriorityQueue } from "./algorithms/PriorityQueue";
 
 interface AlgoProps {
     currentAlgo: string;
@@ -22,6 +24,8 @@ export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> 
     }
     else if( currentAlgo === "A*") {
         //AStar({start, end, walls, board})
+        const frontier = new PriorityQueue;
+        AStar({start, end, walls, frontier})
     }
     else { // Minimax
         //Minimax({start, end, walls, board})

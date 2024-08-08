@@ -15,7 +15,7 @@
 }
 
 .start-cell {
-    background: rgb(18, 18, 255);
+    background: rgb(200, 200, 255);
     animation-name: start-cell-animation;
     animation-duration: 0.5s;
 }
@@ -53,7 +53,7 @@
 }
 
 .explored-cell {
-    background: rgb(140, 254, 165);
+    background: rgb(191, 0, 255);
     animation-name: explored-cell-animation;
     animation-duration: 2s;
 }
@@ -65,7 +65,7 @@
     }
     to {
         background-size: 2rem 2rem;
-        background-color: rgb(140, 254, 165);
+        background-color: rgb(191, 0, 255);
     }
 }
 
