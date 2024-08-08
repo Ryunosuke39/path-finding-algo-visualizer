@@ -161,7 +161,8 @@ export default function Board() {
     // manhattan test 
     let height = rows
     let width = cols
-    const test = ManhattanDis({ end, height, width})
+    const test = ManhattanDis({ end, height:rows, width:cols})
+    console.log(`end: ${end}`)
 
     return (
         <div className="board">
@@ -209,10 +210,10 @@ export default function Board() {
                                 }
                             }}
                         >
-                            {/* {`${rowIdx}, ${colIdx}`} */}
                             {
                                 `${ test[rowIdx][colIdx] }`
                             }
+                            <div className="test"> {`${rowIdx}, ${colIdx}`}</div>
                         </div>
                     ))
                 }</div>

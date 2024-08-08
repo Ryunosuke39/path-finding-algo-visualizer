@@ -83,7 +83,7 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
     // navbar functions - erasing wall states
     const [erasingWall, setErasingWall] = useState<boolean>(false);
     // algorithm choise 
-    const [currentAlgo, setCurrentAlgo] = useState<string>("DFS");
+    const [currentAlgo, setCurrentAlgo] = useState<string>("A*");
     // start search
 
     // ? Popup

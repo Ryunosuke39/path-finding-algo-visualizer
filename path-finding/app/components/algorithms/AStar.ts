@@ -123,6 +123,11 @@ export const AStar = ({start, end, walls, frontier}:AStarProps) => {
                         frontier.add(child)
                     }
                 }
+
+                //test 
+                if(stepCount == 2){
+                    return
+                }
             }
         }
     } // end of class
