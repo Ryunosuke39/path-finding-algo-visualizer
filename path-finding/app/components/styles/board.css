@@ -15,7 +15,7 @@
 }
 
 .start-cell {
-    background: rgb(200, 200, 255);
+    background: rgb(75, 75, 255);
     animation-name: start-cell-animation;
     animation-duration: 0.5s;
 }

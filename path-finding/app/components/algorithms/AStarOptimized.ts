@@ -94,7 +94,9 @@ export const AStarO = ({start, end, scannedBoard, isAStar}: AStarO) => {
             // paint q
             if(steps >= 1 ){ // avoid painting start
                 setTimeout(()=>{
-                    paintExplored([curr.state[0], curr.state[1]])
+                    if(curr.state[0] !== start[0] && curr.state[1] !== start[1] || curr.state[0] !== end[0] && curr.state[1] !== end[1]) {
+                        paintExplored([curr.state[0], curr.state[1]])
+                    }
                 }, steps * 10)
             }
 
