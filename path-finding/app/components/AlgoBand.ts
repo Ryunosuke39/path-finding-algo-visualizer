@@ -15,11 +15,11 @@ export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> 
 
     if(currentAlgo === "DFS") {
         const frontier = new StackFrontier;
-        DBFS({start, end, walls, scannedBoard, frontier})
+        DBFS({start, end, scannedBoard, frontier})
     }
     else if(currentAlgo === "BFS") {
         const frontier = new QueueFrontier;
-        DBFS({start, end, walls, scannedBoard, frontier})
+        DBFS({start, end, scannedBoard, frontier})
     }
     else if( currentAlgo === "GBFS") {
 

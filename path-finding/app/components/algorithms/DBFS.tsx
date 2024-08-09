@@ -6,12 +6,11 @@ import { Node } from "./Node";
 interface DFSProps {
     start: number[];
     end: number[];
-    walls: number[][];
     scannedBoard: string[][];
     frontier: StackFrontier | QueueFrontier;
 }
 
-export const DBFS = ({start, end, walls, scannedBoard, frontier}:DFSProps) => {
+export const DBFS = ({start, end, scannedBoard, frontier}:DFSProps) => {
 
     // 25 row x 50 col
     class Maze {
@@ -28,12 +27,8 @@ export const DBFS = ({start, end, walls, scannedBoard, frontier}:DFSProps) => {
 
         // not wall function
         isWall(state: number[]) {
-            for(let i=0; i<walls.length; i++) {
-                const wall = walls[i];
-                if(wall[0] === state[0] && wall[1] === state[1]){
-                    return true
-                }
-            }
+            let [r, c] = state;
+            if(scannedBoard[r][c] === "#") return true
             return false
         }
     
