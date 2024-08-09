@@ -94,7 +94,9 @@ export const AStarO = ({start, end, scannedBoard, isAStar}: AStarO) => {
             // paint q
             if(steps >= 1 ){ // avoid painting start
                 setTimeout(()=>{
-                    if(curr.state[0] !== start[0] && curr.state[1] !== start[1] || curr.state[0] !== end[0] && curr.state[1] !== end[1]) {
+                    if(curr.state[0] == start[0] && curr.state[1] == start[1] || curr.state[0] == end[0] && curr.state[1] == end[1]) {
+                        // paintExplored([curr.state[0], curr.state[1]])
+                    }else{
                         paintExplored([curr.state[0], curr.state[1]])
                     }
                 }, steps * 10)
@@ -175,4 +177,6 @@ export const AStarO = ({start, end, scannedBoard, isAStar}: AStarO) => {
         // e) push q on the closed list 
         closedList.push(q);
     }
+    // not returning anything? show error 
+    throw new Error("no solution")
 }

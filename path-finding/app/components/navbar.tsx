@@ -8,6 +8,7 @@ import Popup from "./Popup";
 import { ScanBoard } from "./ScanBoard";
 import { Algo } from "./AlgoBand";
 import { clearPath } from "./board";
+import { GenerateMap } from "./algorithms/GenerateMap";
 
 export default function Navbar(){
     const { placingStart, 
@@ -25,7 +26,8 @@ export default function Navbar(){
     
     const { start, 
             end, 
-            walls, } = useBoardInfo();
+            walls,
+            setWalls, } = useBoardInfo();
 
 
     const handleAlgoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -117,6 +119,11 @@ export default function Navbar(){
         setPlacingWall(false);
     }
 
+    // handle generating map 
+    const handleGenerate = () => {
+        GenerateMap({setWalls});
+    }
+
     return(
         <div className="navbar-container">
             <div className="title-container">
@@ -149,8 +156,8 @@ export default function Navbar(){
                 </select>
             </div>
             {/* for popup messsage - read react toastify doc */}
-            <button>
-                Use Preset map
+            <button onClick={handleGenerate}>
+                Generate Map
             </button>
             <ToastContainer theme="colored"/> 
             <button onClick={handleSearch}>

@@ -24,7 +24,6 @@ export const clearPath = (pos: Array<number>) => {
 
 }
 
-
 export default function Board() {
 
     const { start, 
@@ -94,14 +93,18 @@ export default function Board() {
 
     // handle placing start 
     const handlePlacingStart = (rowIdx:number, colIdx:number) => {
-            removeStart(start); // if it exist, remove previous state
-            setStart([rowIdx, colIdx]); // set start
+        removeStart(start); // if it exist, remove previous state
+        eraseWall([rowIdx, colIdx]);
+        removeCellFromWalls(rowIdx, colIdx);
+        setStart([rowIdx, colIdx]); // set start
     }
 
 
     // handle placing start 
     const handlePlacingEnd = (rowIdx:number, colIdx:number) => {
         removeEnd(end); // if it exist, remove previous state
+        eraseWall([rowIdx, colIdx]);
+        removeCellFromWalls(rowIdx, colIdx);
         setEnd([rowIdx, colIdx])
     }
 
@@ -149,12 +152,9 @@ export default function Board() {
     // reflect selected cell
     useEffect(()=>{
         // when start changed, paint start based on new start state value
-        console.log(`${start}`);
         paintStart(start);
         // when end changed, paint start based on new start state value
-        console.log(`${end}`);
         paintEnd(end)
-
         // paint wall
     }, [start, end])
 
@@ -185,8 +185,6 @@ export default function Board() {
                                 }
                                 // just testing 
                                 console.log(`checking walls: ${walls}`)
-                                console.log(`first cell in walls: ${walls[0]}`)
-                                console.log(`current algo: ${currentAlgo}`)
                             }}
                             onMouseDown={()=> {
                                 setIsMouseDown(true);

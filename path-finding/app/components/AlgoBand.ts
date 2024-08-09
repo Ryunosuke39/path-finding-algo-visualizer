@@ -2,6 +2,7 @@ import { DBFS } from "./algorithms/DBFS";
 import { StackFrontier } from "./algorithms/StackFrontier";
 import { QueueFrontier } from "./algorithms/QueueFrontier";
 import { AStarO } from "./algorithms/AStarOptimized";
+import { Dijkstra } from "./algorithms/Dijkstra";
 
 interface AlgoProps {
     currentAlgo: string;
@@ -28,6 +29,6 @@ export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> 
         AStarO({start, end, scannedBoard, isAStar:true})
     }
     else { // Dijkstra
-        
+        // Dijkstra({start, end, scannedBoard})
     }
 }
