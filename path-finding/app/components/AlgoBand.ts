@@ -1,8 +1,7 @@
 import { DBFS } from "./algorithms/DBFS";
 import { StackFrontier } from "./algorithms/StackFrontier";
 import { QueueFrontier } from "./algorithms/QueueFrontier";
-import { AStar } from "./algorithms/AStar";
-import { PriorityQueue } from "./algorithms/PriorityQueue";
+import { AStarO } from "./algorithms/AStarOptimized";
 
 interface AlgoProps {
     currentAlgo: string;
@@ -22,12 +21,14 @@ export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> 
         const frontier = new QueueFrontier;
         DBFS({start, end, walls, scannedBoard, frontier})
     }
-    else if( currentAlgo === "A*") {
-        //AStar({start, end, walls, board})
-        let frontier = new PriorityQueue;
-        AStar({start, end, walls, frontier})
+    else if( currentAlgo === "GBFS") {
+
     }
-    else { // Minimax
-        //Minimax({start, end, walls, board})
+    else if( currentAlgo === "A*") {
+        console.log("wall optimaized hopefully")
+        AStarO({start, end, scannedBoard})
+    }
+    else { // Dijkstra
+        
     }
 }

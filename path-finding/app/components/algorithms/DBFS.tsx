@@ -43,7 +43,11 @@ export const DBFS = ({start, end, walls, scannedBoard, frontier}:DFSProps) => {
             const col = state[1]
             const candidates: [string, [number, number]][] = [
                 ["up", [row-1, col]],
+                // ["up-right", [row-1, col+1]],
+                // ["up-left", [row-1, col-1]],
                 ["down", [row + 1, col]],
+                // ["down-right", [row + 1, col+1]],
+                // ["down-left", [row + 1, col-1]],
                 ["left", [row, col - 1]],
                 ["right", [row, col + 1]],
             ];

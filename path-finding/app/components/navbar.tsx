@@ -144,7 +144,7 @@ export default function Navbar(){
                 <select name="algorithm" id="algorithm" value={currentAlgo} onChange={handleAlgoChange}>
                     <option value="DFS">Depth First Search</option>
                     <option value="BFS">Breath First Search</option>
-                    <option value="GBF">Greedy Best-First Search</option>
+                    <option value="GBFS">Greedy Best-First Search</option>
                     <option value="A*">A*</option>
                     <option value="Dijkstra">Dijkstra's Algorithm</option>
                 </select>
