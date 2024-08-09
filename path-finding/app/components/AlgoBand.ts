@@ -25,7 +25,6 @@ export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> 
 
     }
     else if( currentAlgo === "A*") {
-        console.log("wall optimaized hopefully")
         AStarO({start, end, scannedBoard})
     }
     else { // Dijkstra

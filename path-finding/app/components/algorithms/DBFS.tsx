@@ -95,7 +95,7 @@ export const DBFS = ({start, end, scannedBoard, frontier}:DFSProps) => {
                         let cell = cells[i]
                         setTimeout(()=>{
                             paintPath([cell[0], cell[1]])
-                        }, i* 30)
+                        }, i* 30 + paintCount * 10)
                     }
                     // end loop
                     return
@@ -106,10 +106,10 @@ export const DBFS = ({start, end, scannedBoard, frontier}:DFSProps) => {
 
                 let test = node.state;
                 paintCount += 1;
-                if( paintCount === 2 ) {
+                if(paintCount >=2 ){ // avoid painting start
                     setTimeout(()=>{
                         paintExplored([test[0], test[1]])
-                    }, paintCount * 2)
+                    }, paintCount * 10)
                 }
 
                 const isInExplored = (state: number[]) => {

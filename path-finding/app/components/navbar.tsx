@@ -67,7 +67,6 @@ export default function Navbar(){
         else {
             // if both start and end is placed on board, start searching
             // ExcuteSearch(currentAlgo)
-            console.log(`end:${end}, start:${start}`)
             const scannedBoard = ScanBoard({start, end, walls})
             console.log("scan-res:", scannedBoard)
             Algo({currentAlgo, start, end, walls, scannedBoard})

@@ -1,4 +1,4 @@
-import { paintPath } from "../board";
+import { paintExplored, paintPath } from "../board";
 import { ManhattanDis } from "./ManhattanDis";
 
 interface ANodeProps {
@@ -17,7 +17,7 @@ class ANode {
     constructor( {state, parent, f, g } : ANodeProps ) {
         this.state = state;
         this.parent = parent;
-        this.f = f;
+        this.f = f; // g + manhattan heristic 
         this.g = g; // movement cost to move from the startung point to a given square
     }
 }
@@ -34,13 +34,13 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
     // 0.
     const height = 25;
     const width = 50;
-    const manhattan = ManhattanDis({end, height, width});
+    const manhattan = ManhattanDis({end:end, height:height, width:width});
     let steps = 0;
 
     // 1. Initalized the open list
-    const openList = [];
+    let openList = [];
     // 2. initalized the closed list, put starting node on the open list 
-    const closedList = [];
+    let closedList = [];
     const startNode = new ANode({state:start, parent:null, f:0, g:0 })
     openList.push(startNode)
 
@@ -48,13 +48,12 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
     while(openList.length != 0) {
         // a) find the node with the least f on the open list, call it "q"
         let q = openList.reduce((min, node) => node.f < min.f ? node : min, openList[0]);
-
+        console.log(`${q.f} is least in ${openList.map((i)=> i.f)}`)
         // b) pop q off the open list 
         let qIdx = openList.indexOf(q);
         if (qIdx > -1) {
             openList.splice(qIdx, 1);
         }
-        openList.filter(node => node !== q)
 
         // is walls?
         const isWall = (state: number[])=> {
@@ -65,32 +64,43 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
 
         // c) generate q's successor 
         const neighbors =(state: number[])=> {
-            const row = state[0]
-            const col = state[1]
-            const candidates: [string, [number, number]][] = [
-                ["up", [row-1, col]],
-                ["down", [row + 1, col]],
-                ["left", [row, col - 1]],
-                ["right", [row, col + 1]],
+            let [row, col] = state;
+            const candidates: number[][] = [
+                [row-1, col], // up
+                [row + 1, col], // down
+                [row, col - 1], // left
+                [row, col + 1], // right 
             ];
     
-            const result:[string, [number, number]][] = [];
+            const result:number[][] = [];
     
-            for (let [action, [r, c]] of candidates) {
-                if( 0<=r && r<height && 0<=c && c<width && !isWall([r, c])) { /// <<<<<<< wall doing something wrong?
-                        result.push([action, [r, c]]);
+            for (let [r, c] of candidates) {
+                if( 0<=r && r<height && 0<=c && c<width && !isWall([r, c])) { 
+                        result.push([r, c]);
                 }
             }
             return result;
         }
-    
+
+        // get successor 
         let neighborsList = neighbors(q.state)
 
-        // for each neigbors
+        steps += 1;
+        // d) for each neigbors(successor)
         for( let i=0; i<neighborsList.length; i++) {
+            // set parent to q
+            let curr:ANode = new ANode({state:neighborsList[i], parent:q, f:0, g:0})
+
+            // paint q
+            if(steps >= 1 ){ // avoid painting start
+                console.log(`${q.state}:f-${q.f} is min in ${openList.map((i)=>i.f)}`)
+                setTimeout(()=>{
+                    paintExplored([curr.state[0], curr.state[1]])
+                }, steps * 10)
+            }
+
             // i) if successor is the goal, stop search 
-            let curr = neighborsList[i][1]
-            if(curr[0] == end[0] && curr[1] == end[1]) {
+            if(curr.state[0] === end[0] && curr.state[1] === end[1]) {
                 // get path, paint a optimal path
                 let path = [];
                 while(q.parent != null){
@@ -99,11 +109,11 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
                 }
                 path.reverse();
                 // print a optimal path
-                for(let i=0; i<path.length-1; i++) {
+                for(let i=0; i<path.length; i++) {
                     let cell = path[i]
                     setTimeout(()=>{
                         paintPath([cell[0], cell[1]])
-                    }, i* 30)
+                    }, i* 30 + steps * 10)
                 }
                 return 
             }
@@ -111,42 +121,48 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
             // g = q.g + distance between successor and q
             // h = distance from goal to successor 
             // f = g + h 
-            steps += 1
-            let tempG = q.g + steps;
-            let tempH = manhattan[curr[0]][curr[1]]
-            let tempF = tempG + tempH;
-            // iii) if a node with the same position as successor is in the open list
+            let tempG = q.g + 1;
+            let tempH = manhattan[curr.state[0]][curr.state[1]]
+            let tempF = tempH + tempG;
+            curr.g = tempG;
+            curr.f = tempF;
+            // iii) if a node with the same position as successor curr is in the open list
             // which has a lower f than successor, skip this successor 
             const isInOpenList = (openList:ANode[]) => {
                 for(let i=0; i<openList.length; i++) {
                     let cell:ANode = openList[i];
-                    if (cell.state[0] == curr[0] && cell.state[1] == curr[1] && cell.f < tempF){
-                        // skip this successor 
-                        return true;
+                    if (cell.state[0] === curr.state[0] && cell.state[1] === curr.state[1] ) {
+                        return cell;
                     }
                 }
                 return false;
             }
-            if( isInOpenList(openList) ) continue;
 
-            // iV) if a node with the same position as successor is in the CLOSED list which 
+            let existingOpenNode = isInOpenList(openList)
+            if( existingOpenNode && existingOpenNode.f <= tempF) { // skip this successor 
+                continue;
+            }
+
             const isInClosedList = (closedList:ANode[]) => {
                 for(let i=0; i<closedList.length; i++) {
                     let cell:ANode = closedList[i];
-                    if (cell.state[0] == curr[0] && cell.state[1] == curr[1] && cell.f < tempF){
-                        // skip this successor 
-                        return true;
+                    if (cell.state[0] === curr.state[0] && cell.state[1] === curr.state[1] ) {
+                        return cell;
                     }
                 }
                 return false;
             }
-            if ( isInClosedList(closedList) ) { //skip
+
+            // iV) if a node with the same position as successor is in the CLOSED list which 
+            let existingCloseNode = isInClosedList(closedList);
+            if ( existingCloseNode && existingCloseNode.f <= tempF ) { // skip this successor
                 continue;
             } 
-            else { //otherwise add node to openList
-                let child:ANode = new ANode({state:curr, parent:q, f:tempF, g:tempG});
-                openList.push(child)
+            if (existingOpenNode) {
+                //otherwise add node to openList
+                openList.splice(openList.indexOf(existingOpenNode), 1)
             }
+            openList.push(curr)
 
         }
 
