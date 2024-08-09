@@ -131,13 +131,9 @@ export default function Board() {
 
     // remove cell from walls
     const removeCellFromWalls = (rowIdx:number, colIdx:number) => {
-        for(let i=0; i<walls.length; i++) {
-            if(walls[i][0] == rowIdx && walls[i][1] == colIdx){
-                setWalls((prevWalls) => {
-                    return prevWalls.filter(([x, y]) => !(x === rowIdx && y === colIdx))
-                })
-            }
-        }
+        setWalls((prevWalls) => {
+            return prevWalls.filter(wall => wall[0] !== rowIdx || wall[1] !== colIdx);
+        })
     }
 
     // hadble erase cells from walls 

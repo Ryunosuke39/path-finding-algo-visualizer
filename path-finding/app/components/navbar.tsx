@@ -121,7 +121,7 @@ export default function Navbar(){
 
     // handle generating map 
     const handleGenerate = () => {
-        GenerateMap({setWalls});
+        GenerateMap({start, setWalls});
     }
 
     return(
