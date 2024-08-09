@@ -22,10 +22,10 @@ export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> 
         DBFS({start, end, scannedBoard, frontier})
     }
     else if( currentAlgo === "GBFS") {
-
+        AStarO({start, end, scannedBoard, isAStar:false})
     }
     else if( currentAlgo === "A*") {
-        AStarO({start, end, scannedBoard})
+        AStarO({start, end, scannedBoard, isAStar:true})
     }
     else { // Dijkstra
         

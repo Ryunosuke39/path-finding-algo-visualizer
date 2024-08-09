@@ -26,11 +26,12 @@ interface AStarO {
     start: number[];
     end: number[];
     scannedBoard: string[][];
+    isAStar: boolean;
 }
 
 
 // A*
-export const AStarO = ({start, end, scannedBoard}: AStarO) => {
+export const AStarO = ({start, end, scannedBoard, isAStar}: AStarO) => {
     // 0.
     const height = 25;
     const width = 50;
@@ -48,7 +49,6 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
     while(openList.length != 0) {
         // a) find the node with the least f on the open list, call it "q"
         let q = openList.reduce((min, node) => node.f < min.f ? node : min, openList[0]);
-        console.log(`${q.f} is least in ${openList.map((i)=> i.f)}`)
         // b) pop q off the open list 
         let qIdx = openList.indexOf(q);
         if (qIdx > -1) {
@@ -93,7 +93,6 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
 
             // paint q
             if(steps >= 1 ){ // avoid painting start
-                console.log(`${q.state}:f-${q.f} is min in ${openList.map((i)=>i.f)}`)
                 setTimeout(()=>{
                     paintExplored([curr.state[0], curr.state[1]])
                 }, steps * 10)
@@ -123,7 +122,12 @@ export const AStarO = ({start, end, scannedBoard}: AStarO) => {
             // f = g + h 
             let tempG = q.g + 1;
             let tempH = manhattan[curr.state[0]][curr.state[1]]
-            let tempF = tempH + tempG;
+            let tempF = 0
+            if( isAStar ){
+                tempF = tempH + tempG;
+            } else {
+                tempF = tempH;
+            }
             curr.g = tempG;
             curr.f = tempF;
             // iii) if a node with the same position as successor curr is in the open list
