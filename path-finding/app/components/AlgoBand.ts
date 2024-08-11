@@ -8,11 +8,10 @@ interface AlgoProps {
     currentAlgo: string;
     start: number[];
     end: number[]
-    walls: number[][];
     scannedBoard: string[][];
 }
 
-export const Algo =({currentAlgo, start, end, walls, scannedBoard}:AlgoProps)=> {
+export const Algo =({currentAlgo, start, end, scannedBoard}:AlgoProps)=> {
 
     if(currentAlgo === "DFS") {
         const frontier = new StackFrontier;

@@ -1,3 +1,5 @@
+
+
 interface DijkstraProps {
     start: number[];
     end: number[];
@@ -5,5 +7,5 @@ interface DijkstraProps {
 }
 
 export const Dijkstra = ({start, end, scannedBoard}: DijkstraProps) => {
-
+    
 }

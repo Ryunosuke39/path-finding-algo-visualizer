@@ -71,13 +71,13 @@ export default function Navbar(){
             // ExcuteSearch(currentAlgo)
             const scannedBoard = ScanBoard({start, end, walls})
             console.log("scan-res:", scannedBoard)
-            Algo({currentAlgo, start, end, walls, scannedBoard})
+            Algo({currentAlgo, start, end, scannedBoard})
         }
     }
 
     // remove all explored, path tag from thml elements
     // row=25, col=50
-    const handleClear = () => {
+    const handlePathClear = () => {
         for(let i=0; i<25; i++){
             for(let j=0; j<50; j++){
                 clearPath([i, j])
@@ -121,7 +121,7 @@ export default function Navbar(){
 
     // handle generating map 
     const handleGenerate = () => {
-        GenerateMap({start, setWalls});
+        GenerateMap({start, setWalls, walls});
     }
 
     return(
@@ -163,7 +163,7 @@ export default function Navbar(){
             <button onClick={handleSearch}>
                 Start Path Finding
             </button>
-            <button onClick={handleClear}>
+            <button onClick={handlePathClear}>
                 Clear Path
             </button>
             <button onClick={()=> location.reload()}>
