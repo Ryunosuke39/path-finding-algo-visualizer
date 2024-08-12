@@ -13,8 +13,13 @@
     z-index: 1;
 }
 
+.close-btn {
+    height: 2rem;
+}
+
 .close-btn:hover {
-    background-color: blue;
+    color: white;
+    background-color: rgb(125, 125, 125);
 }
 
 .popup-inner {
@@ -29,4 +34,30 @@
     position: absolute;
     top: 16px;
     right: 16px
+}
+
+.popup-title {
+    font-size: 1.3rem;
+    padding-bottom: 1rem;
+}
+
+.instructions {
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+    margin-bottom: 1rem;;
+}
+
+.inst-ctx {
+    margin-bottom: 1rem;
+}
+
+.caution {
+    list-style-type: none;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
 }

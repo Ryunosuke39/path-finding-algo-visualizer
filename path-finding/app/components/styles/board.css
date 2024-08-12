@@ -54,27 +54,26 @@
 }
 
 .explored-cell {
-    background: #106782;;
+    background: #003044;
     animation-name: explored-cell-animation;
     animation-duration: 0.5s;
 }
 
 @keyframes explored-cell-animation {
     0% {
-        background-color: #D2EFF5;
+        background-color: #DAEBF4;
     }
     20% {
-        background-color: #9EDCE5;
+        background-color: #B6D3E3;
     }
     50% {
-        background-size: 2rem 2rem;
-        background-color: #70C3CE;
+        background-color: #3A6275;
     }
     70% {
-        background-color: #2898AE;
+        background-color: #004154;
     }
     100% {
-        background-color: #106782;
+        background-color: #003044;
     }
 }
 

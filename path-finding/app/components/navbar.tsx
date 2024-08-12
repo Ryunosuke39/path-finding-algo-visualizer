@@ -130,6 +130,7 @@ export default function Navbar(){
 
     // handle generating map 
     const handleGenerate = () => {
+        handlePathClear();
         GenerateMap({start, setWalls, walls});
     }
 
@@ -150,6 +151,9 @@ export default function Navbar(){
                     <div className="instraction-container" onClick={()=> setShowInstraction(true)}>
                         <div className="instraction">Need help?</div>
                     </div>
+                    <button className="btn" onClick={handleGenerate}>
+                        Generate Map
+                    </button>
                     <button className="btn" onClick={()=> handlePlacingStart()}>
                         {placingStart ? "Finish":"Place Start"}
                     </button>
@@ -189,10 +193,6 @@ export default function Navbar(){
                     <button className="btn" onClick={()=> handleErasingWall()}>
                         {erasingWall ? "Done" : "Erasing Walls"}
                     </button>
-                    <button className="btn" onClick={handleGenerate}>
-                        Generate Map
-                    </button>
-
                     <ToastContainer theme="colored"/> 
 
                     <button className="btn" onClick={()=> location.reload()}>
