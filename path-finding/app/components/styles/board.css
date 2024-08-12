@@ -37,7 +37,7 @@
 }
 
 .wall-cell {
-    background:rgb(118, 118, 118);
+    background:rgb(164, 164, 164);
     animation-name: wall-cell-animation;
     animation-duration: 0.5s;
 }
@@ -49,24 +49,32 @@
     }
     to {
         background-size: 2rem 2rem;
-        background-color: rgb(118, 118, 118);
+        background-color: rgb(164, 164, 164);
     }
 }
 
 .explored-cell {
-    background: rgb(166, 0, 255);
+    background: #106782;;
     animation-name: explored-cell-animation;
     animation-duration: 0.5s;
 }
 
 @keyframes explored-cell-animation {
-    from {
-        background-size: 0rem 0rem;
-        background-color: rgb(0, 0, 0);
+    0% {
+        background-color: #D2EFF5;
     }
-    to {
+    20% {
+        background-color: #9EDCE5;
+    }
+    50% {
         background-size: 2rem 2rem;
-        background-color: rgb(166, 0, 255);
+        background-color: #70C3CE;
+    }
+    70% {
+        background-color: #2898AE;
+    }
+    100% {
+        background-color: #106782;
     }
 }
 
@@ -88,12 +96,14 @@
 }
 
 .cell-contents {
-    color: rgb(0, 0, 0);
-    width: 1.9rem;
-    height: 1.9rem;
-    font-size: 0.8rem;
-
+    /* center */
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /* styles */
+    color: rgb(0, 0, 0);
+    opacity: 0.3;
+    width: 1.9rem;
+    height: 1.9rem;
 }

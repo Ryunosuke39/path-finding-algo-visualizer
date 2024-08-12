@@ -3,12 +3,12 @@ import { useSwitchs } from './SwitchCtx'
 
 export default function Popup({triggerPop}: {triggerPop: boolean}) {
 
-    const {setShowInstraction} = useSwitchs()
+    const {showInstraction,setShowInstraction} = useSwitchs()
     return triggerPop ? (
         <div className="popup">
             <div className='popup-inner'>
-                <div>How to use it?</div>
-                <button className="close-btn" onClick={()=> setShowInstraction(false)}>close</button>
+                <div className='popup-title'>How to use it?</div>
+                <button className="close-btn" onClick={()=> setShowInstraction(false)}>How to use it?</button>
                 <ol>
                     <li>Click "Place Start", Click anywhere you would like to place start point on the grid board</li>
                     <li>Click "Done" to Exist "Place Start" once you placed a starting cell</li>

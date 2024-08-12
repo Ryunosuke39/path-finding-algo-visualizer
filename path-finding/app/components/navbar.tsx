@@ -151,10 +151,10 @@ export default function Navbar(){
                         <div className="instraction">Need help?</div>
                     </div>
                     <button className="btn" onClick={()=> handlePlacingStart()}>
-                        {placingStart ? "Finish Place Start":"Place Start"}
+                        {placingStart ? "Finish":"Place Start"}
                     </button>
                     <button className="btn" onClick={()=> handlePlacingEnd()}>
-                        {placingEnd ? "Finish PlacingGoal":"Place Goal"}
+                        {placingEnd ? "Finish":"Place Goal"}
                     </button>
                 </div>
 

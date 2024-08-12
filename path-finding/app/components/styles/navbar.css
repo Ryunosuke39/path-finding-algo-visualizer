@@ -83,11 +83,20 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 0.8rem;
-    height: 1.8rem;
+    background-color: #f4f4f4;
+    border-radius: 20px;
+
+    font-size: 0.7rem;
+    height: 2rem;
     width: 5rem;
     margin-right: 0.3rem;
     margin-left: 0.3rem;
+
+    padding: 1rem;;
+}
+
+.btn:active {
+    background-color: antiquewhite;
 }
 
 
@@ -136,7 +145,7 @@
 }
 
 .start-path-btn:hover {
-    background-color: #00ff62;
+    background-color: rgb(2, 98, 183);
 }
 
 .score-container {
