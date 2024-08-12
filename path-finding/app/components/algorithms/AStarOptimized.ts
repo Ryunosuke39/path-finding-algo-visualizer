@@ -27,11 +27,12 @@ interface AStarO {
     end: number[];
     scannedBoard: string[][];
     isAStar: boolean;
+    setPathCellCount:React.Dispatch<React.SetStateAction<number>>;
 }
 
 
 // A*
-export const AStarO = ({start, end, scannedBoard, isAStar}: AStarO) => {
+export const AStarO = ({start, end, scannedBoard, isAStar, setPathCellCount}: AStarO) => {
     // 0.
     const height = 25;
     const width = 50;
@@ -111,6 +112,8 @@ export const AStarO = ({start, end, scannedBoard, isAStar}: AStarO) => {
                     q = q.parent;
                 }
                 path.reverse();
+                // set path cell count 
+                setPathCellCount(path.length)
                 // print a optimal path
                 for(let i=0; i<path.length; i++) {
                     let cell = path[i]

@@ -10,6 +10,10 @@ import { Algo } from "./AlgoBand";
 import { clearPath } from "./board";
 import { GenerateMap } from "./algorithms/GenerateMap";
 
+// font 
+import { Bebas_Neue } from "next/font/google";
+const bebas_neue = Bebas_Neue({weight: "400", subsets: ["latin"]});
+
 export default function Navbar(){
     const { placingStart, 
             setPlacingStart, 
@@ -27,7 +31,9 @@ export default function Navbar(){
     const { start, 
             end, 
             walls,
-            setWalls, } = useBoardInfo();
+            setWalls, 
+            pathCellCount,
+            setPathCellCount, } = useBoardInfo();
 
 
     const handleAlgoChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,6 +42,8 @@ export default function Navbar(){
 
 
     const handleSearch = () => {
+        // clear previous path if it exist on the board
+        handlePathClear();
         
         setPlacingStart(false);
         setPlacingEnd(false);
@@ -71,13 +79,14 @@ export default function Navbar(){
             // ExcuteSearch(currentAlgo)
             const scannedBoard = ScanBoard({start, end, walls})
             console.log("scan-res:", scannedBoard)
-            Algo({currentAlgo, start, end, scannedBoard})
+            Algo({currentAlgo, start, end, scannedBoard, setPathCellCount})
         }
     }
 
     // remove all explored, path tag from thml elements
     // row=25, col=50
     const handlePathClear = () => {
+        setPathCellCount(0);
         for(let i=0; i<25; i++){
             for(let j=0; j<50; j++){
                 clearPath([i, j])
@@ -127,48 +136,72 @@ export default function Navbar(){
     return(
         <div className="navbar-container">
             <div className="title-container">
-                <div>Pathfinding Visualizer</div>
-                <div onClick={()=> setShowInstraction(true)}>?</div>
-            </div>
-            <Popup triggerPop={showInstraction}></Popup>
-
-            <button onClick={()=> handlePlacingStart()}>
-                {placingStart ? "Done":"Place Start"}
-            </button>
-            <button onClick={()=> handlePlacingEnd()}>
-                {placingEnd ? "Done": "Place Goal"}
-            </button>
-            <button onClick={()=> handlePlacingWall()}>
-                {placingWall ? "Done":"Placing Walls"}
-            </button>
-            <button onClick={()=> handleErasingWall()}>
-                {erasingWall ? "Done" : "Erasing Walls"}
-            </button>
-
-            <div className="test">
-                <label htmlFor="algorithm">Algorithm AI</label>
-                <select name="algorithm" id="algorithm" value={currentAlgo} onChange={handleAlgoChange}>
-                    <option value="DFS">Depth First Search</option>
-                    <option value="BFS">Breath First Search</option>
-                    <option value="GBFS">Greedy Best-First Search</option>
-                    <option value="A*">A*</option>
-                    <option value="Dijkstra">Dijkstra's Algorithm</option>
-                </select>
+                <div className={bebas_neue.className}>
+                    <div className="title">Pathfinding Visualizer</div>
+                </div>
             </div>
             {/* for popup messsage - read react toastify doc */}
-            <button onClick={handleGenerate}>
-                Generate Map
-            </button>
-            <ToastContainer theme="colored"/> 
-            <button onClick={handleSearch}>
-                Start Path Finding
-            </button>
-            <button onClick={handlePathClear}>
-                Clear Path
-            </button>
-            <button onClick={()=> location.reload()}>
-                Reset Board
-            </button>
+            <Popup triggerPop={showInstraction}></Popup>
+
+
+            <div className="main-controller">
+
+                <div className="first-btns">
+                    <div className="instraction-container" onClick={()=> setShowInstraction(true)}>
+                        <div className="instraction">Need help?</div>
+                    </div>
+                    <button className="btn" onClick={()=> handlePlacingStart()}>
+                        {placingStart ? "Finish Place Start":"Place Start"}
+                    </button>
+                    <button className="btn" onClick={()=> handlePlacingEnd()}>
+                        {placingEnd ? "Finish PlacingGoal":"Place Goal"}
+                    </button>
+                </div>
+
+                <div className="choose-algo-start">
+                    <label className="algo-type-label" htmlFor="algorithm">Algorithm Type</label>
+                    <select className="algo-type-select" name="algorithm" id="algorithm" value={currentAlgo} onChange={handleAlgoChange}>
+                        <option value="DFS">Depth First Search</option>
+                        <option value="BFS">Breath First Search</option>
+                        <option value="GBFS">Greedy Best-First Search</option>
+                        <option value="A*">A*</option>
+                    </select>
+
+                    <button className="start-path-btn" onClick={handleSearch}>
+                        Start Path Finding
+                    </button>
+                    <button className="btn" onClick={handlePathClear}>
+                        Clear Path
+                    </button>
+
+                </div>
+
+                <div className="score-container">
+                        <div className="score">{pathCellCount}</div>
+                        <div className="score-following">cells to Goal</div>
+                </div>
+                
+                <div className="second-btns">
+
+                    <button className="btn" onClick={()=> handlePlacingWall()}>
+                        {placingWall ? "Done":"Placing Walls"}
+                    </button>
+                    <button className="btn" onClick={()=> handleErasingWall()}>
+                        {erasingWall ? "Done" : "Erasing Walls"}
+                    </button>
+                    <button className="btn" onClick={handleGenerate}>
+                        Generate Map
+                    </button>
+
+                    <ToastContainer theme="colored"/> 
+
+                    <button className="btn" onClick={()=> location.reload()}>
+                        Reset Board
+                    </button>
+                </div>
+
+
+            </div>
 
         </div>
     )

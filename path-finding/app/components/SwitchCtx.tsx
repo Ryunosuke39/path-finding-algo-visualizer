@@ -48,6 +48,9 @@ interface BoardInfo {
     // walls state 
     walls: number[][];
     setWalls: React.Dispatch<React.SetStateAction<number[][]>>;
+    // cell count from start to goal 
+    pathCellCount: number;
+    setPathCellCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 // use switch contexts
@@ -83,8 +86,8 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
     // navbar functions - erasing wall states
     const [erasingWall, setErasingWall] = useState<boolean>(false);
     // algorithm choise 
-    const [currentAlgo, setCurrentAlgo] = useState<string>("A*");
-    // start search
+    const [currentAlgo, setCurrentAlgo] = useState<string>("DFS");
+    // start search --> depricated 
 
     // ? Popup
     const [showInstraction, setShowInstraction] = useState<boolean>(false);
@@ -93,6 +96,8 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
     const [start, setStart] = useState<number[]>([]);
     const [end, setEnd] = useState<number[]>([]);
     const [walls, setWalls] = useState<number[][]>([]);
+    // cell count from start to goal
+    const [pathCellCount, setPathCellCount] = useState<number>(0);
 
     return (
         <SwitchsContext.Provider value={{ 
@@ -122,6 +127,8 @@ export function SwitchCtxProvider({ children }:SwitchsProps ) {
                 setEnd,
                 walls,
                 setWalls,
+                pathCellCount,
+                setPathCellCount,
             }}>
                 <div>{ children }</div>
             </BoardInfoContext.Provider>

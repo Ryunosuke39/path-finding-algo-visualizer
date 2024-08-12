@@ -8,9 +8,10 @@ interface DFSProps {
     end: number[];
     scannedBoard: string[][];
     frontier: StackFrontier | QueueFrontier;
+    setPathCellCount:React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const DBFS = ({start, end, scannedBoard, frontier}:DFSProps) => {
+export const DBFS = ({start, end, scannedBoard, frontier, setPathCellCount}:DFSProps) => {
 
     // 25 row x 50 col
     class Maze {
@@ -97,6 +98,8 @@ export const DBFS = ({start, end, scannedBoard, frontier}:DFSProps) => {
                             paintPath([cell[0], cell[1]])
                         }, i* 30 + paintCount * 10)
                     }
+                    // set cell score 
+                    setPathCellCount(cells.length-1)
                     // end loop
                     return
                 }

@@ -80,7 +80,7 @@ export const GenerateMap = ({start, setWalls, walls}: Prop) => {
     setWalls(temp);
 
     // -- initalize -- 
-    const height = 12; // 12 20 24 /25-1= 24/2 = 12
+    const height = 13; // 12 20 24 /25-1= 24/2 = 12
     const width = 25; // 25 30 50 /50/2 = 25
     const pathWidth = 1;
 
@@ -159,45 +159,46 @@ export const GenerateMap = ({start, setWalls, walls}: Prop) => {
     for (let i=0; i<height; i++) {
         for (let j=0; j<width; j++) {
             // remove wall cell 
-            let [h, w] = [i* (pathWidth +1), j* (pathWidth + 1)]
-            if (isExplored([i, j])) {
-                // removeWall([i* (pathWidth +1), j* (pathWidth + 1)])
-                removeWall([h, w]);
-            } else {
-                // removeWall([i* (pathWidth + 1), j* (pathWidth + 1)])
-            }
-            // make path that lead to another cell 
-            let arrow = arrows[i][j];
-            if (arrow != null) {
-                for(let i of arrow) {
-                    if (i == "up") {
-                        // removeWall([i* (pathWidth + 1)-1, j* (pathWidth + 1)])
-                        console.log(`removing wall at ${h-1}, ${w}`)
-                        removeWall([h-1, w])
-                    } 
-                    else if (i == "down") {
-                        // removeWall([i* (pathWidth + 1)+1, j* (pathWidth + 1)])
-                        console.log(`removing wall at ${h+1}, ${w}`)
-                        removeWall([h+1, w])
-                    }
-                    else if (i == "left") {
-                        // removeWall([i* (pathWidth + 1), j* (pathWidth + 1) -1])
-                        console.log(`removing wall at ${h}, ${w-1}`)
-                        removeWall([h, w-1])
-                    }
-                    else if (i == "right"){
-                        // removeWall([i* (pathWidth + 1), j* (pathWidth + 1) +1])
-                        console.log(`removing wall at ${h}, ${w+1}`)
-                        removeWall([h, w+1])
-                    }
-                    else {
-                        console.log("this should not be printed")
+            setTimeout(()=>{
+                // -- start of set time out 
+                let [h, w] = [i* (pathWidth +1), j* (pathWidth + 1)]
+                if (isExplored([i, j])) {
+                    // removeWall([i* (pathWidth +1), j* (pathWidth + 1)])
+                    removeWall([h, w]);
+                } else {
+                    // removeWall([i* (pathWidth + 1), j* (pathWidth + 1)])
+                }
+                // make path that lead to another cell 
+                let arrow = arrows[i][j];
+                if (arrow != null) {
+                    for(let i of arrow) {
+                        if (i == "up") {
+                            // removeWall([i* (pathWidth + 1)-1, j* (pathWidth + 1)])
+                            console.log(`removing wall at ${h-1}, ${w}`)
+                            removeWall([h-1, w])
+                        } 
+                        else if (i == "down") {
+                            // removeWall([i* (pathWidth + 1)+1, j* (pathWidth + 1)])
+                            console.log(`removing wall at ${h+1}, ${w}`)
+                            removeWall([h+1, w])
+                        }
+                        else if (i == "left") {
+                            // removeWall([i* (pathWidth + 1), j* (pathWidth + 1) -1])
+                            console.log(`removing wall at ${h}, ${w-1}`)
+                            removeWall([h, w-1])
+                        }
+                        else if (i == "right"){
+                            // removeWall([i* (pathWidth + 1), j* (pathWidth + 1) +1])
+                            console.log(`removing wall at ${h}, ${w+1}`)
+                            removeWall([h, w+1])
+                        }
+                        else {
+                            console.log("this should not be printed")
+                        }
                     }
                 }
-                console.log(`arrow: ${arrow}`)
-
-            }
-
+                // -- end of set time out 
+            }, i+j *2)
         }
     }
 }
