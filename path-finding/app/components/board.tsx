@@ -204,10 +204,11 @@ export default function Board() {
                                 }
                             }}
                         >
-                             <div className="test"> {`${rowIdx}, ${colIdx}`}</div>
-                            {
-                                `${ test[rowIdx][colIdx] }`
-                            }
+                            <div className="cell-contents">
+                                {
+                                    `${ currentAlgo === "A*" && !isNaN(test[rowIdx][colIdx]) || currentAlgo === "GBFS" && !isNaN(test[rowIdx][colIdx]) ? test[rowIdx][colIdx]: "" }`
+                                }
+                            </div>
                         </div>
                     ))
                 }</div>

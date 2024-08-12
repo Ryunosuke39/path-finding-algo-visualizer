@@ -8,10 +8,11 @@
 }
 
 .cell {
-    width: 2rem;
-    height: 2rem;
+    width: 1.9rem;
+    height: 1.9rem;
     outline: 1px solid rgb(134, 154, 189);
     display: inline-block;
+    overflow: hidden;
 }
 
 .start-cell {
@@ -86,6 +87,13 @@
     }
 }
 
-.test {
-    z-index: 1;
+.cell-contents {
+    color: rgb(0, 0, 0);
+    width: 1.9rem;
+    height: 1.9rem;
+    font-size: 0.8rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
